@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-18T02:57:47.262Z</updated>
+  <updated>2018-05-25T14:59:18.033Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,25 +17,24 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>20180518100803</title>
-    <link href="http://yoursite.com/2018/05/18/20180518100803/"/>
-    <id>http://yoursite.com/2018/05/18/20180518100803/</id>
-    <published>2018-05-18T02:08:03.000Z</published>
-    <updated>2018-05-18T02:57:47.262Z</updated>
+    <title>魔法丝袜之影搭建初阶指南</title>
+    <link href="http://yoursite.com/2018/05/25/%E9%AD%94%E6%B3%95%E4%B8%9D%E8%A2%9C%E4%B9%8B%E5%BD%B1%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
+    <id>http://yoursite.com/2018/05/25/魔法丝袜之影使用指南/</id>
+    <published>2018-05-25T08:26:35.000Z</published>
+    <updated>2018-05-25T14:59:18.033Z</updated>
     
-    <content type="html"><![CDATA[<p>这是一篇测试文章</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="什么是魔法丝袜之影"><a href="#什么是魔法丝袜之影" class="headerlink" title="什么是魔法丝袜之影"></a>什么是魔法丝袜之影</h1><p><a href="shadowsocks.org">Shadowsocks</a>，简称SS，又称魔法丝袜之影、“梯子”，是一种经过改良的Socks5代理，一般用作科学上网的工具。<br>一般分为服务器端和客户端两部分，服务器端部署在GFW之外的主机上，客户端装在自己的电脑上。使用时只需要从客户端建立连接即可。</p><h1 id="部署服务器端"><a href="#部署服务器端" class="headerlink" title="部署服务器端"></a>部署服务器端</h1><h2 id="需要准备的工具"><a href="#需要准备的工具" class="headerlink" title="需要准备的工具"></a>需要准备的工具</h2><ul><li>一台国外的主机</li><li><a href="https://winscp.net/eng/docs/lang:chs" target="_blank" rel="noopener">WinSCP</a>和<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/" target="_blank" rel="noopener">PuTTY</a> (远程连接工具)</li></ul><h2 id="购买并初始化VPS"><a href="#购买并初始化VPS" class="headerlink" title="购买并初始化VPS"></a>购买并初始化VPS</h2><p>首先我们需要一台国外的主机，独服(Dedicated Server)或者VPS(Virtual private server)皆可。不过只是用来搭建SS的话VPS的性能已经足够。<br>常用的国外VPS提供商有：</p><ul><li><a href="https://www.bwh1.net/" target="_blank" rel="noopener">搬瓦工</a></li><li><a href="https://www.vultr.com/" target="_blank" rel="noopener">Vultr</a></li><li><a href="https://www.digitalocean.com/" target="_blank" rel="noopener">DigitalOcean</a></li><li><a href="https://www.linode.com/" target="_blank" rel="noopener">Linode</a></li><li><a href="https://www.arubacloud.com/" target="_blank" rel="noopener">Aruba</a></li></ul><p>选择VPS时应当关注架构、每月流量、延迟、与各节点数据传输速度、价格等问题，按需购买。<br>配置时，节点根据自己情况选择，操作系统选择Ubuntu 16.04。一切就绪后，初始化VPS。</p><h2 id="连接到远程主机"><a href="#连接到远程主机" class="headerlink" title="连接到远程主机"></a>连接到远程主机</h2><p>与远程主机通讯需要借助一定的工具，常用的通信方案如下：</p><table><thead><tr><th style="text-align:center">本地计算机</th><th style="text-align:center">远程主机</th><th style="text-align:center">通信工具</th></tr></thead><tbody><tr><td style="text-align:center">Windows</td><td style="text-align:center">Windows</td><td style="text-align:center">远程桌面</td></tr><tr><td style="text-align:center">Windows</td><td style="text-align:center">Linux</td><td style="text-align:center">WinSCP、PuTTY等</td></tr></tbody></table><p>所以我们使用WinSCP和PuTTY。<br><em>WinSCP的优点是有图形界面，符合Windows用户的使用习惯，用户可以像管理Windows一样管理自己的Linux主机。PuTTY的优点是可以让用户对主机发送交互式指令。二者搭配使用效果更佳。</em></p><p>启动WinSCP，打开登录界面，选择<code>新建站点</code>，<code>主机名</code>填写自己远程主机的IP地址，<code>用户名</code>默认root，填写密码，点击<code>登录</code>。</p><p><img src="/images/1.png" alt="登录WinSCP"><br>主界面左侧是本地计算机的文件目录，右侧是远程主机的目录，可以很方便地对远程主机的文件进行读写、上传下载等操作。<br>我们一般使用命令行界面进行SS的搭建，这时候就要用到PuTTY。PuTTY可以很方便地在WinSCP里面打开。点击工具栏里的<code>在PuTTY中打开回话</code>按钮，或者按<code>Ctrl+P</code>即可。</p><p><img src="/images/2.png" alt="打开PuTTY"><br><img src="/images/3.png" alt="PuTTY界面"><center>PuTTY界面</center></p><p><em>注意，如果WinSCP和PuTTY不是安装到默认的安装位置，则需要在WinSCP里手动指定PuTTY的安装目录。操作如下：</em><br><em>1. 点击菜单栏<code>选项</code>–<code>选项</code>，打开选项窗口。</em><br><em>2. 左侧点击<code>集成</code>下级的<code>应用程序</code>，右侧点击<code>浏览...</code>指定PuTTY主程序路径。</em></p><p><img src="/images/4.png" alt="选择PuTTY路径"></p><h2 id="更新内核并开启BBR"><a href="#更新内核并开启BBR" class="headerlink" title="更新内核并开启BBR"></a>更新内核并开启BBR</h2><p>BBR是来自Google的黑科技，是一种开源的TCP拥塞控制算法。其作用说白了就是可以提高网速，让我们在科学上网时更加丝滑顺畅，可以流畅观看Youtube 1080P视频。</p><p>这里我们使用<a href="https://teddysun.com/489.html" target="_blank" rel="noopener">秋水逸冰</a>的一键安装脚本。<br>登录后在PuTTY里输入以下命令（按鼠标右键可以粘贴）：</p><pre><code>wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh &amp;&amp; chmod +x bbr.sh &amp;&amp; ./bbr.sh</code></pre><p>提示选择内核的时候随便选一个比较新的，安装完成后会提示是否重启，按<code>y</code>重启。脚本执行完毕。</p><p>以下命令用于检测脚本是否成功执行。<br>首先验证内核是否更新：</p><pre><code>uname -r</code></pre><p>接下来验证是否开启了BBR：</p><pre><code>sysctl net.ipv4.tcp_available_congestion_control</code></pre><p>返回值一般为：net.ipv4.tcp_available_congestion_control = bbr cubic reno</p><pre><code>sysctl net.ipv4.tcp_congestion_control</code></pre><p>返回值一般为：net.ipv4.tcp_congestion_control = bbr</p><pre><code>sysctl net.core.default_qdisc</code></pre><p>返回值一般为：net.core.default_qdisc = fq</p><pre><code>lsmod | grep bbr</code></pre><p>返回值有 tcp_bbr 模块即说明 bbr 已启动。部分VPS可能没有此返回值，也是正常情况。</p><h2 id="安装SS服务器端"><a href="#安装SS服务器端" class="headerlink" title="安装SS服务器端"></a>安装SS服务器端</h2><p>此处仍然使用<a href="https://teddysun.com/342.html" target="_blank" rel="noopener">秋水逸冰</a>的一键安装脚本。<br>登录后在PuTTY里依次输入以下三条命令（按鼠标右键可以粘贴）：</p><pre><code>wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.shchmod +x shadowsocks.sh./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</code></pre><p>安装过程中会要求输入以下配置信息：</p><ul><li>端口号：1-65535任意一个</li><li>密码：在本地客户端登录使用</li><li>加密方法：可选aes-256-cfb</li></ul><p>安装成功后会有以下提示：</p><pre><code>Congratulations, Shadowsocks-python server install completed!Your Server IP        :your_server_ipYour Server Port      :your_server_portYour Password         :your_passwordYour Encryption Method:your_encryption_methodWelcome to visit:https://teddysun.com/342.htmlEnjoy it!</code></pre><p>至此，服务器端的部署完成。<br>关掉PuTTY窗口，回到WinSCP，在右侧面板root目录下面会看到新生成的一个二维码图片，右键将其下载到本地，用来配置本地客户端。</p><p><img src="/images/5.png" alt="下载二维码"></p><h1 id="配置本地客户端"><a href="#配置本地客户端" class="headerlink" title="配置本地客户端"></a>配置本地客户端</h1><p>在SS的<a href="https://github.com/shadowsocks/shadowsocks-windows/releases" target="_blank" rel="noopener">GitHub</a>页面下载SS的Windows客户端。<br>完成之后打开刚刚下载的二维码，在打开SS客户端，右键托盘图标，在弹出的菜单中选择<code>服务器</code>–<code>扫描屏幕上的二维码</code>即可一键配置完成。</p><p><img src="/images/6.png" alt="用二维码快速配置"></p><p><em>如果需要手动配置，可以点击<code>编辑服务器</code>输入服务器的信息。</em></p><p>如果有部署了多个SS服务器，可以将他们都添加到客户端，随时切换。</p><h1 id="客户端的使用"><a href="#客户端的使用" class="headerlink" title="客户端的使用"></a>客户端的使用</h1><p>右键托盘图标，选择启动系统代理即可启动科学上网。<br>代理模式可以选择PAC模式或者全局模式</p><ul><li>PAC模式是指只有PAC文件里面列出的网站才会启用科学上网，相当于一个规则库。本地PAC文件可以编辑，也可以使用在线PAC，在<code>PAC</code>菜单里设置。</li><li>全局模式是指访问所有的网站都会启用科学上网。</li></ul><p>平时使用时一般PAC足够了。有时候因为运营商的原因导致某些网站访问困难时也可以使用全局模式，或者将他们写入PAC文件，继续使用PAC模式。</p><p>这时可以打开一个Youtube 1080P视频测试以下连接的速度。科学上网之路由此开始了。</p><h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><p>开启了BBR之后可以用<code>bench.sh</code>测试VPS的性能。<br>用PuTTY登录主机，输入</p><pre><code>wget -qO- bench.sh | bash</code></pre><p>可以看到VPS的硬件信息、读写性能以及网络带宽等信息。</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;这是一篇测试文章&lt;/p&gt;
-
+        &lt;h1 id=&quot;什么是魔法丝袜之影&quot;&gt;&lt;a href=&quot;#什么是魔法丝袜之影&quot; class=&quot;headerlink&quot; title=&quot;什么是魔法丝袜之影&quot;&gt;&lt;/a&gt;什么是魔法丝袜之影&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;shadowsocks.org&quot;&gt;Shadowsocks&lt;/a&gt;，
       
     
     </summary>
     
-      <category term="Test" scheme="http://yoursite.com/categories/Test/"/>
+      <category term="网络技术" scheme="http://yoursite.com/categories/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/"/>
     
     
   </entry>
